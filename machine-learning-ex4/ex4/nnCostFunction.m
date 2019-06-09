@@ -106,10 +106,10 @@ J = sum(sum((-newY).*log(H) - (1-newY).*log(1-H), 2))/m+R;
 
 %backpropagation
 delta3=H-newY;
-Theta2_grad=(delta3'*a2)/m+sum(((lambda/(2*m))*sum(newTheta2)));
+Theta2_grad=(delta3'*a2)/m+(lambda/(m))*newTheta2;
 gPrimeZ3=a2.*(1-a2);
 delta2=((Theta2(:,2:end))'*delta3')'.*gPrimeZ3(:,2:end);
-Theta1_grad=(delta2'*a1)/m+sum(((lambda/(2*m))*sum(newTheta1)));
+Theta1_grad=(delta2'*a1)/m+(lambda/(m))*newTheta1;
 
 
 

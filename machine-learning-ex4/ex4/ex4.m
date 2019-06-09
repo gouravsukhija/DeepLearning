@@ -183,7 +183,7 @@ fprintf('\nTraining Neural Network... \n')
 
 %  After you have completed the assignment, change the MaxIter to a larger
 %  value to see how more training helps.
-options = optimset('MaxIter', 50);
+options = optimset('MaxIter', 400);
 
 %  You should also try different values of lambda
 lambda = 1;
@@ -228,6 +228,8 @@ pause;
 %  you compute the training set accuracy.
 
 pred = predict(Theta1, Theta2, X);
+%X1=imread("zero.jpg")
+%pred1=predict(Theta1,Theta2,X1);
 
 fprintf('\nTraining Set Accuracy: %f\n', mean(double(pred == y)) * 100);
 
