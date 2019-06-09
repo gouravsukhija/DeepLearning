@@ -74,8 +74,8 @@ a2=a2';
 
 % add 1s to a2
 a2 = [ones(size(a1,1), 1) a2];
-
-H=sigmoid(a2*Theta2');
+z2=a2*Theta2';
+H=sigmoid(z2);
 
 % change y to 0 and 1 format. It is 5000X1. we need to change it to 5000X10.
 % One row for each label with 10 col(0s and 1s).
@@ -88,7 +88,30 @@ endfor
 %we need to sum each row first and then take sum of each row unlike direct sum. It means convert 5000X10
 % matrix to 5000X1 matrix first and then do a sum again. The argument 2 does the same thing
 % calculate J
-J = sum(sum((-newY).*log(H) - (1-newY).*log(1-H), 2))/m
+
+% calculate regularization term for part2
+
+newTheta1=Theta1;
+ 
+newTheta1(:,1)=0;
+
+newTheta2=Theta2;
+
+newTheta2(:,1)=0;
+
+R=sum(((lambda/(2*m))*sum(newTheta1.^2)))+sum(((lambda/(2*m))*sum(newTheta2.^2)));
+
+J = sum(sum((-newY).*log(H) - (1-newY).*log(1-H), 2))/m+R;
+
+
+%backpropagation
+delta3=H-newY;
+Theta2_grad=(delta3'*a2)/m+sum(((lambda/(2*m))*sum(newTheta2)));
+gPrimeZ3=a2.*(1-a2);
+delta2=((Theta2(:,2:end))'*delta3')'.*gPrimeZ3(:,2:end);
+Theta1_grad=(delta2'*a1)/m+sum(((lambda/(2*m))*sum(newTheta1)));
+
+
 
 
 
